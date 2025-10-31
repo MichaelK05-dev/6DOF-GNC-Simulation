@@ -5,7 +5,7 @@ public:
 	PIDController();
 
 	void setGains(double kp, double ki, double kd);
-	double calculate(double error, double deriviate);
+	double calculate(double error, double deriviate, double dt);
 
 	void reset();
 private:
