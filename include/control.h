@@ -8,7 +8,7 @@ class Control {
 public:
 	Control();
 
-	void run(); // TO DO: Add parameters
+	void run(Guidance::AttitudeTarget& target, Navigation::StateEstimate& current, double dt); // TO DO: Add parameters
 	ActuatorCommands getCommands() const;
 	void reset();
 private:
