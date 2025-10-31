@@ -1,5 +1,3 @@
-// GNCProjekt.cpp : Diese Datei enthält die Funktion "main". Hier beginnt und endet die Ausführung des Programms.
-//
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include "communication.h"
