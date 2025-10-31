@@ -1,5 +1,5 @@
 #include "state_machine.h"
-#include <iostream>;
+#include  <iostream>
 
 StateMachine::StateMachine() {
 	currentState = FlightState::PAD_IDLE;
