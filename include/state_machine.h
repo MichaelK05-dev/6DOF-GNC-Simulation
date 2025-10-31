@@ -1,5 +1,6 @@
 #pragma once
 #include "DataStructures.h"
+#include "Navigation.h"
 
 enum class FlightState {
 	PAD_IDLE,
@@ -11,7 +12,7 @@ enum class FlightState {
 class StateMachine {
 public:
 	StateMachine();
-	void update(const SensorData& sensor_data);
+	void update(const Navigation::StateEstimate& estimated_state);
 
 	FlightState getCurrentState() const;
 
