@@ -12,13 +12,14 @@ FlightState StateMachine::getCurrentState() const {
 void StateMachine::update(const Navigation::StateEstimate& estimated_state) {
 	switch (currentState) {
 	case FlightState::PAD_IDLE:
-		if (estimated_state.sim_time > 2.0) {
-			currentState = FlightState::POWERED_ASCENT; // TO DO: Switch to velocity based state change
+		if (estimated_state.vel_z < 0) { // -z = up
+			currentState = FlightState::POWERED_ASCENT;
 		    std::cout << "PAD_IDLE -> POWERED_ASCENT\n";
 		}
+		std::cout << "velocity: " << estimated_state.vel_z;
 		break;
 	case FlightState::POWERED_ASCENT:
-		if (estimated_state.sim_time > 100.0) { // TO DO: Detect engine shutdown
+		if (engine_status == false) { 
 			currentState = FlightState::COASTING_TO_APOGEE;
 			std::cout << "POWERED_ASCENT -> COASTING_TO_APOGEE";
 		}

@@ -4,6 +4,9 @@
 #include "gnc_system.h"
 #include <cmath>
 
+double burntime = 160;
+bool engine_status = true;
+
 int main()
 {
     try {
@@ -20,7 +23,7 @@ int main()
                 ActuatorCommands actuator_commands = gnc.run(sensor_data, dt);
                 comm.sendCommands(actuator_commands);
 
-
+               
                 std::cout << "Time = " << sensor_data.sim_time << "s\n"
                     << "Altitude = " << -sensor_data.pos_z << "m\n"
                     << "Pitch = " << sensor_data.pitch * 180.0 / M_PI << "deg\n";

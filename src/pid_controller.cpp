@@ -14,10 +14,17 @@ void PIDController::reset() {
 	integral = 0.0;
 }
 
-double PIDController::calculate(double error, double derivative, double dt) {
+double PIDController::calculate(double error, double derivative, double dt, bool antiwindup) {
 	double p_out = kp * error;
+	double anti_windup_threshold = 1.5 * (M_PI / 180.0); // <1.5 degrees error, the integral will be summed to avoid integral windup
 
-	integral += error * dt;
+	if (antiwindup && std::abs(error) < anti_windup_threshold) {
+		integral += error * dt;
+	}
+	else {
+		integral = 0.0;
+	}
+
 	double i_out = ki * integral;
 
 	double d_out = kd * derivative;

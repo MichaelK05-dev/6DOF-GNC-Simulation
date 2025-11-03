@@ -15,4 +15,5 @@ public:
 	AttitudeTarget getTarget();
 private: 
 	AttitudeTarget currentTarget;
+	bool pitch_over_complete = false;
 };

@@ -19,5 +19,9 @@ void Navigation::update(SensorData& raw_sensors) {
     estimated_state.p = raw_sensors.p;
     estimated_state.q = raw_sensors.q;
     estimated_state.r = raw_sensors.r;
+    estimated_state.vel_x = raw_sensors.vel_x;
+    estimated_state.vel_y = raw_sensors.vel_y;
+    estimated_state.vel_z = raw_sensors.vel_z;
+    estimated_state.flight_path_angle = raw_sensors.flight_path_angle;
 
 }
