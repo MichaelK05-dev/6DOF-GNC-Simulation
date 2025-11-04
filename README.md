@@ -2,14 +2,11 @@
 
 A high-fidelity 6-DOF (Six-Degrees-of-Freedom) simulation of a Falcon 9-like launch vehicle's atmospheric flight phase, from launch pad to stage separation. Features a complete Guidance, Navigation, and Control system written in C++ that runs in a co-simulation environment with a detailed physics model built in Simulink.
 
-
-
 1. [Overview & Architecture](#overview--architecture)
 2. [Simulation Model (Simulink)](#the-simulation-model-simulink)
    - [6-DOF Physics Engine](#6-dof-physics-engine)
    - [Variable Mass & Gravity Model](#variable-mass--gravity-model)
    - [Aerodynamics Model](#aerodynamics-model)
-   - [UDP Send/Receive](#udp-send-receive)
 3. [Flight Software (C++)](#the-flight-software-c)
 4. [Monte Carlo Analysis](#monte-carlo-analysis)
 
@@ -59,7 +56,7 @@ end
 ```
 Using linear interpolation we can get the rough ISP numbers for each altitude based on the atmospheric pressure.
 
-#Vehicle Mass & Gravity Model
+### Vehicle Mass & Gravity Model
 ```matlab
 function M = variable_mass(t)
 wet_mass = 549054;
@@ -69,7 +66,7 @@ end
 ```
 mass = wet mass of a fully fueled Falcon 9 subtracted by sim time * flow rate of nine Merlin-1D engines.
 ```matlab
-function [I, dIdt] = build_calculator(m, m_flowrate, initial_mass, initial_I_pitch_yaw)
+function [I, dIdt] = inertia_calculator(m, m_flowrate, initial_mass, initial_I_pitch_yaw)
     roll_inertia_factor = 0.05;
 
     I_pitch_yaw = initial_I_pitch_yaw * (m/initial_mass);
@@ -90,7 +87,7 @@ For gravity we just multiply mass*g with the DCM_be (Direction to Cosine Matrix,
 This is the entire input side of the Simulink model, excluding aerodynamics, which we will get to now:
 <img src="./assets/images/inputs2.png" width=70% height=70%>
 
-#Aerodynamics Model
+### Aerodynamics Model
 First, we calculate the alpha and beta angles, alpha being angle of attack and beta being sideslip angle.
 ```
 function [alphabeta, Airspeed]= fcn(V_wind, V_in, DCM_be, t)
@@ -205,5 +202,6 @@ guidance.cpp determines the target attitude of the rocket in order to follow its
 
 control.cpp is responsible for maintaining vehicle stability. It computes the necessary actuator commands by feeding the error into three independent PID controllers for roll, pitch and yaw axes.
 
-## Monte-Carlo-Analysis
+## Monte Carlo Analysis
 
+I've ran a Monte-Carlo-Analysis with 100 different runs. The simulation included randomized dispersions in key parameters such as wind, engine thrust (±2% variance), and aerodynamic coefficients. The system successfully maintained stability across all runs, achieving a final state at MECO with dispersions of less than 2-sigma from the nominal trajectory. The code ban be viewed in the repo: /matlab/montecarlo.m.
