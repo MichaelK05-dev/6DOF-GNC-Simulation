@@ -205,3 +205,5 @@ control.cpp is responsible for maintaining vehicle stability. It computes the ne
 ## Monte Carlo Analysis
 
 I've ran a Monte-Carlo-Analysis with 100 different runs. The simulation included randomized dispersions in key parameters such as wind, engine thrust (±2% variance), and aerodynamic coefficients. The system successfully maintained stability across all runs, achieving a final state at MECO with dispersions of less than 2-sigma from the nominal trajectory. The code ban be viewed in the repo: /matlab/montecarlo.m.
+
+A video of the gravity turn in action under norminal conditions can be seen here (4x speed): https://youtu.be/Lh0_2-5AyBY
